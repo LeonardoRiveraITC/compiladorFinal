@@ -4,5 +4,5 @@ def limpiarWhite(archivo):
     while True:
         line=file.readline()
         if(line==''):
-            return finalBuf
+            return finalBuf+' '
         finalBuf+=line.replace(" ","").replace("\n","")

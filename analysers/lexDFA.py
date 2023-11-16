@@ -9,9 +9,20 @@ class DFA:
     def getState(self):
         return self.Q
 
-    def start(self,w):
-        q=self.q0
-        while w!="":
-            q=self.Delta[(q,w[0])]
-            w=w[1:]
-        return q in self.F
+    def getInitial(self):
+        return self.q0
+
+    def changeState(self,state,w):
+        if w in self.Sigma["alf"]:
+            w="alfabeto"
+        elif w in self.Sigma["dig"]:
+            w="digito"
+        elif w in self.Sigma["op"]:
+            w="operador"
+        elif w in self.Sigma["de"]:
+            w="delimitador"
+        q=(state,w)
+        if q in self.Delta:
+            return self.Delta[q]
+        else:
+            return False 

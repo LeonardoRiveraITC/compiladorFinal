@@ -2,8 +2,6 @@ from scan import limpiarWhite
 from lexDFA import * 
 buf=limpiarWhite("../test/read.lc")
 
-tBuf1=0;
-tBuf2=0;
 counter=0
 symbolTable={}
 estado='a'
@@ -14,7 +12,7 @@ delimitador={"{","}","(",")",";"}
 reservadas={"si","mientras","entero","cadena","flotante"}
 
 automata=DFA({"a","b","c","d","e"}, #estados
-             [alfabeto,digito,operador,delimitador], #abecedario
+             {"alf":alfabeto,"dig":digito,"op":operador,"de":delimitador}, #abecedario
              {
                  #transiciones 
                  #identificador
@@ -36,33 +34,20 @@ automata=DFA({"a","b","c","d","e"}, #estados
                  ("g",'"'):"h",
                  #delimitador
                  ("a","delimitador"):"i",
-                 #keywords
-                 #si
-                 #("a","s"):"f",
-                 #("f","i"):"g",
-                 #("g",""):"h",
-                 #if-identificador
-                 #("f","alfabetodigito"):"b",
-                 #("g","alfabetodigito"):"b",
-                 #while 
-                 #("a","w"):"i",
-                 #("i","h"):"j",
-                 #("j","i"):"k",
-                 #("k","l"):"l",
-                 #("l","e"):"m",
-                 #("m",""):"n",
-                 #while-identificador
-                 #("i","alfabetodigito"):"b",
-                 #("j","alfabetodigito"):"b",
-                 #("k","alfabetodigito"):"b",
-                 #("l","alfabetodigito"):"b",
-                 #("m","alfabetodigito"):"b",
                  },
              "a", #estado inicial
-             {"b","c","e","h","f","i"} #estados de aceptacion
+             {"b","c","e","f","h","i"} #estados de aceptacion
              );
 
-
-
-
-print (buf)
+buf1=0
+while(buf1<len(buf) and buf[buf1]!=' '):
+    buf2=buf1
+    state=automata.changeState(automata.getInitial(),buf[buf1])
+    lastState=state
+    while (state!=False):
+        buf2=buf2+1
+        lastState=state
+        state=automata.changeState(state,buf[buf2])
+    buf1=buf2
+    print(lastState)
+        
