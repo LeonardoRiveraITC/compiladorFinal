@@ -10,10 +10,10 @@ def limpiarWhite(archivo):
         if comment!=-1:
             line=line[:comment]
         #eliminar whitespaces
-        line=line.replace(" ","~").replace("\n","")
+        line=line.replace(" ","").replace("\n","") 
         if(line==''):
             return finalBuf
-        line={"buf":line,"line":count}
-        finalBuf.append(line)
-        
-        
+        #agregar sentinelas
+        line=line+'~'
+        data={"buf":line,"line":count}
+        finalBuf.append(data)

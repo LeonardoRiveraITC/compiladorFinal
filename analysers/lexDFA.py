@@ -25,4 +25,4 @@ class DFA:
         if q in self.Delta:
             return self.Delta[q]
         else:
-            return False 
+            return 9 
