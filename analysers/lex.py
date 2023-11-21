@@ -1,6 +1,8 @@
 from scan import limpiarWhite
 from lexDFA import * 
 from symbolTable import *
+from state import *
+
 buf=limpiarWhite("../test/read.lc")
 
 stable=symbolTableGlobal({})
@@ -10,6 +12,8 @@ digito={"0","1","2","3","4","5","6","7","8","9"}
 operador={"=","+","-","/","*"}
 delimitador={"{","}","(",")",";"}
 reservadas={"si","mientras","entero","cadena","flotante"}
+
+mode=state(True)
 
 def Token(estado):
     return {
@@ -57,6 +61,7 @@ while(buf1<len(buf) and buf[buf1]!=' '):
         buf2=buf2+1
         lastState=state
         state=automata.changeState(state,buf[buf2])
+        mode.step('Estado actual: '+ lastState + ' | Caracter leido:' + buf[buf2])
     if(lastState not in automata.F):
         print("error")
         break
