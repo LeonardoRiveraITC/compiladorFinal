@@ -13,14 +13,14 @@ class DFA:
         return self.q0
 
     def changeState(self,state,w):
-        if w in self.Sigma["alf"]:
-            w="alfabeto"
-        elif w in self.Sigma["dig"]:
-            w="digito"
-        elif w in self.Sigma["op"]:
-            w="operador"
-        elif w in self.Sigma["de"]:
-            w="delimitador"
+        if w in self.Sigma["alf"]: #alfabeto
+            w=0
+        elif w in self.Sigma["dig"]: #digito
+            w=1
+        elif w in self.Sigma["op"]: #operador
+            w=2
+        elif w in self.Sigma["de"]: #delimitador
+            w=3
         q=(state,w)
         if q in self.Delta:
             return self.Delta[q]

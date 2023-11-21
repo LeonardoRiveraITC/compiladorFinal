@@ -13,44 +13,44 @@ operador={"=","+","-","/","*"}
 delimitador={"{","}","(",")",";"}
 reservadas={"si","mientras","entero","cadena","flotante"}
 
-mode=state(True)
+mode=state(False)
 
 def Token(estado):
     return {
-            'b': lambda: "id",
-            'c': lambda: "num",
-            'e': lambda: "float",
-            'f': lambda: "op",
-            'h': lambda: "cadena",
-            'i': lambda: "delim" 
+             1: lambda: "id",
+             2: lambda: "num",
+             4: lambda: "float",
+             5: lambda: "op",
+             6: lambda: "cadena",
+             8: lambda: "delim" 
             }.get(estado, lambda: None)
 
-automata=DFA({"a","b","c","d","e"}, #estados
+automata=DFA({0,1,2,3,4,5,6,7,8,9}, #estados
              {"alf":alfabeto,"dig":digito,"op":operador,"de":delimitador}, #abecedario
              {
                  #transiciones 
                  #identificador
-                 ("a","alfabeto"):"b",
-                 ("b","alfabeto"):"b",
-                 ("b","digito"):"b",
+                 (0,0):1,
+                 (1,0):1,
+                 (1,1):1,
                  #entero o flotante
-                 ("a","digito"):"c",
-                 ("c","digito"):"c",
-                 ("c","."):"d",
-                 ("d","digito"):"e",
-                 ("e","digito"):"e",
+                 (0,1):2,
+                 (2,1):2,
+                 (2,"."):3,
+                 (3,1):4,
+                 (4,1):4,
                  #operador
-                 ("a","operador"):"f",
+                 (0,2):5,
                  #cadena
-                 ("a",'"'):"g",
-                 ("g","alfabeto"):"g",
-                 ("g","digito"):"g",
-                 ("g",'"'):"h",
+                 (0,'"'):6,
+                 (6,0):6,
+                 (6,1):6,
+                 (6,'"'):7,
                  #delimitador
-                 ("a","delimitador"):"i",
+                 (0,3):8,
                  },
-             "a", #estado inicial
-             {"b","c","e","f","h","i"} #estados de aceptacion
+             0, #estado inicial
+             {1,2,4,5,7,8} #estados de aceptacion
              );
 buf1=0
 while(buf1<len(buf) and buf[buf1]!=' '):
@@ -61,11 +61,12 @@ while(buf1<len(buf) and buf[buf1]!=' '):
         buf2=buf2+1
         lastState=state
         state=automata.changeState(state,buf[buf2])
-        mode.step('Estado actual: '+ lastState + ' | Caracter leido:' + buf[buf2])
+        mode.step('Estado actual: '+  str(lastState) + ' | Caracter leido:' + buf[buf2])
     if(lastState not in automata.F):
         print("error")
         break
     else:
+        print(lastState)
         t=Token(lastState)();
         val=buf[buf1:buf2]
         stable.addSymbol(t,val)
