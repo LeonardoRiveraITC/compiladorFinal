@@ -10,7 +10,7 @@ def limpiarWhite(archivo):
         if comment!=-1:
             line=line[:comment]
         #eliminar whitespaces
-        line=line.replace("\n","")
+        line=line.replace(" ","~").replace("\n","")
         if(line==''):
             return finalBuf
         line={"buf":line,"line":count}
