@@ -14,6 +14,6 @@ def limpiarWhite(archivo):
         if(line==''):
             return finalBuf
         #agregar sentinelas
-        line=line+'~'
+        line=line+' '
         data={"buf":line,"line":count}
         finalBuf.append(data)
