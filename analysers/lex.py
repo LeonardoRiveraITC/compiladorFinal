@@ -49,6 +49,8 @@ automata=DFA({0,1,2,3,4,5,6,7,8,9}, #estados
                  (0,'"'):6,
                  (6,0):6,
                  (6,1):6,
+                 (6,2):6,
+                 (6,3):6,
                  (6,'"'):7,
                  #delimitador
                  (0,3):8,
@@ -62,7 +64,7 @@ for el in buf:
     buf2=buf1
     bufLine=el["buf"]
     bufNum=el["line"]
-    while(bufLine[buf2]!=' '):
+    while(bufLine[buf2]!='~'):
         buf2=buf1
         state=automata.changeState(automata.getInitial(),bufLine[buf2])
         lastState=state
@@ -78,7 +80,12 @@ for el in buf:
         else:
             t=Token(lastState)()
             val=bufLine[buf1:buf2]
-            stable.addSymbol(t,val)
+            if(val in reservadas):
+                stable.addSymbol(value=val)
+            elif(val == ' '):
+                print("eof")
+            else:
+                stable.addSymbol(t,val)
             buf1=buf2
 
 print(stable.getTable())

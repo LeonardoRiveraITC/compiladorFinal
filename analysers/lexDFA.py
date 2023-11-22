@@ -21,6 +21,8 @@ class DFA:
             w=2
         elif w in self.Sigma["de"]: #delimitador
             w=3
+        elif w == " ":
+            w=3
         q=(state,w)
         if q in self.Delta:
             return self.Delta[q]

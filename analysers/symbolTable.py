@@ -5,7 +5,7 @@ class symbolTableGlobal:
     def getTable(self):
         return self.table
 
-    def addSymbol(self,token,value=''):
+    def addSymbol(self,token='',value=''):
         self.table=self.table | {value:token}
 
     def changeSymbol(self,token,value=''):

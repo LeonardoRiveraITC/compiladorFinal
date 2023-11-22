@@ -1,3 +1,5 @@
 {
-cadena x = "nueva cadena""; 
+cadena x = "nueva cadena"; 
+entero y = 100;
+flotante z = 200.20
 }#comentario1
