@@ -1,7 +1,11 @@
+from os import error
 from scan import limpiarWhite
 from lexDFA import * 
 from symbolTable import *
 from state import *
+import sys
+sys.path.append('../utilities/')
+from errorStack import *
 
 buf=limpiarWhite("../test/read.lc")
 
@@ -13,6 +17,7 @@ delimitador={"{","}","(",")",";"}
 reservadas={"si","mientras","entero","cadena","flotante"}
 
 mode=state(False)
+errorS=errorStack([])
 
 def Token(estado):
     return {
@@ -56,6 +61,7 @@ for el in buf:
     buf1=0
     buf2=buf1
     bufLine=el["buf"]
+    bufNum=el["line"]
     while(bufLine[buf2]!=' '):
         buf2=buf1
         state=automata.changeState(automata.getInitial(),bufLine[buf2])
@@ -67,7 +73,7 @@ for el in buf:
             state=automata.changeState(state,bufLine[buf2])
 
         if(lastState not in automata.F):
-            #raise error
+            errorS.pushErrorStack("Error: 200"+str(bufNum),lastState)
             break
         else:
             t=Token(lastState)()
@@ -76,4 +82,4 @@ for el in buf:
             buf1=buf2
 
 print(stable.getTable())
-
+print(errorS.getErrorStack())
