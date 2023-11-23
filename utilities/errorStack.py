@@ -5,8 +5,8 @@ class errorStack:
     def getErrorStack(self):
         return self.error
 
-    def pushErrorStack(self,error,line):
-        self.error.append(error+str(line))
+    def pushErrorStack(self,code,line,info):
+        self.error.append(str(code)+" en la linea "+str(line))
     
     def popErrorStack(self):
         self.error.pop()
