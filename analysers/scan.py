@@ -5,15 +5,15 @@ def limpiarWhite(archivo):
     while True:
         count+=1
         line=file.readline()
+        if(line==''):
+            return finalBuf
+        #agregar sentinelas
+        #eliminar whitespaces
         #eliminar comentarios
         comment=line.find("#") 
         if comment!=-1:
             line=line[:comment]
-        #eliminar whitespaces
         line=line.replace("\n","") 
-        if(line==''):
-            return finalBuf
-        #agregar sentinelas
         line=line+'~'
         data={"buf":line,"line":count}
         finalBuf.append(data)

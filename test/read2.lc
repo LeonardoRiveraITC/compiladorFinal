@@ -1,0 +1,10 @@
+{
+cadena x = ""cadena mal formada"
+entero y = #comentario a media linea 2
+#comentario 
+res = x+y
+#comentario
+si (x<y){
+flotante z=22.22
+}
+}

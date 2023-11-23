@@ -12,7 +12,7 @@ alfabeto={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","
 digito={"0","1","2","3","4","5","6","7","8","9"}
 operador={'=',"+","-","/","*"}
 delimitador={"{","}","(",")",";"}
-reservadas={"si":1,"mientras":2,"entero":3,"cadena":4,"flotante":5}
+reservadas={"si":"si","else":"else","mientras":"mientras","entero":"entero","cadena":"cadena","flotante":"flotante"}
 
 def Token(estado):
     return {
@@ -37,6 +37,7 @@ class lex:
         #archivo a abrir
         stable=self.stable
         errorS=self.estack
+        print(self.file)
         buf=limpiarWhite(self.file)
 
         automata=DFA({0,1,2,3,4,5,6,7,8,9}, #estados
@@ -97,4 +98,4 @@ class lex:
                     else:
                         stable.addSymbol(t,val)
                     buf1=buf2
-
+            print(stable.getTable())

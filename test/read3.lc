@@ -1,0 +1,10 @@
+{
+cadena x = "cadena bien formada"
+entero y = 200 #reservada -> id -> num
+#comentario 
+res = y+100
+#comentario
+si (res < 1000){
+flotante z=22.22
+}
+}
