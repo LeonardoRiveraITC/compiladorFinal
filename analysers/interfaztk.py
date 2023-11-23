@@ -14,7 +14,7 @@ from errorStack import *
 from lex import *
 from symbolTable import symbolTableGlobal
 
-stable=symbolTableGlobal([])
+stable=symbolTableGlobal({})
 #modo
 mode=state(False)
 #stack de errores

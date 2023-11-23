@@ -9,7 +9,7 @@ sys.path.append('../utilities/')
 from errorStack import *
 from lex import *
 
-stable=symbolTableGlobal([])
+stable=symbolTableGlobal({})
 #modo
 mode=state(False)
 #stack de errores
@@ -18,5 +18,4 @@ errorS=errorStack([])
 test=lex('../test/read3.lc',mode,stable,errorS)
 test.startLexer()
 
-stable.printTable()
 print(errorS.getErrorStack())

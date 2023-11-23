@@ -103,14 +103,14 @@ class lex:
                     t=Token(lastState)()
                     val=bufLine[buf1:buf2]
                     if(val in reservadas):
-                        stable.addSymbol(reservadas[val],"reservada")
+                        stable.addSymbol("reservada",reservadas[val])
                     elif (val in operador_logico):
-                        stable.addSymbol(val,"op_log")
+                        stable.addSymbol("op_log",val)
                     elif (val in operador_aritmetico):
-                        stable.addSymbol(val,"op_ar")
+                        stable.addSymbol("op_ar",val)
                     elif(val == ' '):
                         pass
                     else:
                         stable.addSymbol(t,val)
                     buf1=buf2
-            print(stable.getTable())
+        stable.printTable()
