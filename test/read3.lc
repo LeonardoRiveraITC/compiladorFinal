@@ -1,10 +1,17 @@
 {
-cadena x = "cadena bien formada"
-entero y = 200 #reservada -> id -> num
-#comentario 
-res = y+100
-#comentario
-si (res < 1000){
-flotante z=22.22
+#se asignan las variables
+entero x = 20;
+entero x2= 100;
+entero x3=x+x2; #se termina la asignacion
+#se revisa la condicion
+if(x3>200){
+    cadena c="El peso es mayor a 200";
 }
+
+mientras(x3>10){
+    imprimir("reparticion incompleta");
+    x3=x3/2;
+}
+
+imprimir(x3);
 }

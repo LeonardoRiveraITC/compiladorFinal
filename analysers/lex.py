@@ -12,7 +12,7 @@ alfabeto={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","
 digito={"0","1","2","3","4","5","6","7","8","9"}
 operador={'=',"+","-","/","*","<",">"}
 delimitador={"{","}","(",")",";"}
-reservadas={"si":"si","else":"else","mientras":"mientras","entero":"entero","cadena":"cadena","flotante":"flotante"}
+reservadas={"si":"si","else":"else","mientras":"mientras","entero":"entero","cadena":"cadena","flotante":"flotante","imprimir":"imprimir","teclado":"teclado"}
 
 def Token(estado):
     return {
@@ -100,7 +100,7 @@ class lex:
                     t=Token(lastState)()
                     val=bufLine[buf1:buf2]
                     if(val in reservadas):
-                        stable.addSymbol(reservadas[val])
+                        stable.addSymbol(reservadas[val],"reservada")
                     elif(val == ' '):
                         pass
                     else:
