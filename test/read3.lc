@@ -8,7 +8,7 @@ if(x3>200){
     cadena c="El peso es mayor a 200";
 }
 
-mientras(x3>10){
+mientras(x3==10){
     imprimir("reparticion incompleta");
     x3=x3/2;
 }

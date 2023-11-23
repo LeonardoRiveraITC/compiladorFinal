@@ -10,7 +10,9 @@ from errorStack import *
 #alfabeto
 alfabeto={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"}
 digito={"0","1","2","3","4","5","6","7","8","9"}
-operador={'=',"+","-","/","*","<",">"}
+operador={'==','=',"+","-","/","*","<",">"}
+operador_logico={'==',"!="}
+operador_aritmetico={"+","-","/","*","<",">"}
 delimitador={"{","}","(",")",";"}
 reservadas={"si":"si","else":"else","mientras":"mientras","entero":"entero","cadena":"cadena","flotante":"flotante","imprimir":"imprimir","teclado":"teclado"}
 
@@ -63,6 +65,7 @@ class lex:
                          (4,1):4,
                          #operador
                          (0,2):5,
+                         (5,2):5,
                          #cadena
                          (0,'"'):6,
                          (6,0):6,
@@ -101,6 +104,10 @@ class lex:
                     val=bufLine[buf1:buf2]
                     if(val in reservadas):
                         stable.addSymbol(reservadas[val],"reservada")
+                    elif (val in operador_logico):
+                        stable.addSymbol(val,"op_log")
+                    elif (val in operador_aritmetico):
+                        stable.addSymbol(val,"op_ar")
                     elif(val == ' '):
                         pass
                     else:
