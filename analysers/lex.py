@@ -10,7 +10,7 @@ from errorStack import *
 #alfabeto
 alfabeto={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"}
 digito={"0","1","2","3","4","5","6","7","8","9"}
-operador={'=',"+","-","/","*"}
+operador={'=',"+","-","/","*","<",">"}
 delimitador={"{","}","(",")",";"}
 reservadas={"si":"si","else":"else","mientras":"mientras","entero":"entero","cadena":"cadena","flotante":"flotante"}
 
@@ -22,6 +22,13 @@ def Token(estado):
              5: lambda: "op",
              7: lambda: "cadena",
              8: lambda: "delim" 
+            }.get(estado, lambda: None)
+
+def error(estado):
+    return {
+             3: lambda: 102,
+             6: lambda: 101,
+             9: lambda: 103 
             }.get(estado, lambda: None)
 
 class lex:
@@ -86,7 +93,8 @@ class lex:
                     state=automata.changeState(state,bufLine[buf2])
 
                 if(lastState not in automata.F):
-                    errorS.pushErrorStack(100,str(bufNum),"Se encontro un error léxico en la linea")
+                    errorS.pushErrorStack(error(lastState)(),str(bufNum))
+                    exit()
                     break
                 else:
                     t=Token(lastState)()

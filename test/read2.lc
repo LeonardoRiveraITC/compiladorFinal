@@ -1,5 +1,6 @@
 {
-cadena x = ""cadena mal formada"
+#comentario
+cadena x = "cadena mal formada"
 entero y = #comentario a media linea 2
 #comentario 
 res = x+y

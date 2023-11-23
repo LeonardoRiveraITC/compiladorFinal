@@ -15,7 +15,7 @@ mode=state(False)
 #stack de errores
 errorS=errorStack([])
 
-test=lex('../test/read3.lc',mode,stable,errorS)
+test=lex('../test/read2.lc',mode,stable,errorS)
 test.startLexer()
 
 stable.printTable()
