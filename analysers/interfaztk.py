@@ -9,7 +9,7 @@ from lexDFA import *
 from symbolTable import *
 from state import *
 import sys
-sys.path.append('../utilities/')
+sys.path.append('../utilities')
 from errorStack import *
 from lex import *
 from symbolTable import symbolTableGlobal
