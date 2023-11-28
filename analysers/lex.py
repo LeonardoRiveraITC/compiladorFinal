@@ -14,7 +14,7 @@ operador={'==','=',"+","-","/","*","<",">"}
 operador_logico={'==',"!="}
 operador_aritmetico={"+","-","/","*","<",">"}
 delimitador={"{","}","(",")",";"}
-reservadas={"si":"si","else":"else","mientras":"mientras","entero":"entero","cadena":"cadena","flotante":"flotante","imprimir":"imprimir","teclado":"teclado"}
+reservadas={"si","else","mientras","entero","cadena","flotante","imprimir","teclado"}
 
 def Token(estado):
     return {
@@ -103,14 +103,18 @@ class lex:
                     t=Token(lastState)()
                     val=bufLine[buf1:buf2]
                     if(val in reservadas):
-                        stable.addSymbol("reservada",reservadas[val])
+                        print(val)
+                        stable.addSymbol("reservada",val)
                     elif (val in operador_logico):
+                        print(val)
                         stable.addSymbol("op_log",val)
                     elif (val in operador_aritmetico):
+                        print(val)
                         stable.addSymbol("op_ar",val)
                     elif(val == ' '):
                         pass
                     else:
+                        print(val)
                         stable.addSymbol(t,val)
                     buf1=buf2
         stable.printTable()

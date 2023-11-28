@@ -9,11 +9,11 @@ class symbolTableGlobal:
 
     def addSymbol(self,token,lexema):
         idTable=buscar(self.table,lexema)
+        self.id+=1
         if(idTable!=None):
-            self.table[self.id]={"":idTable,"lex":'',"token":''}
+            self.table[self.id]={"reference":idTable,"lex":'',"token":''}
         else:
-            self.id+=1
-            self.table[self.id]={"lex":lexema,"token":token}
+            self.table[self.id]={"lex":lexema,"token":token,"reference":''}
 
     def changeSymbol(self,lexema,token=''):
         self.table["token"]=lexema

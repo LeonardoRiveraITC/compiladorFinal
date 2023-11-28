@@ -14,6 +14,9 @@ def limpiarWhite(archivo):
         if comment!=-1:
             line=line[:comment]
         line=line.replace("\n","") 
-        line=line+'~'
-        data={"buf":line,"line":count}
-        finalBuf.append(data)
+        if (line!=' '):
+            line=line+'~'
+            data={"buf":line,"line":count}
+            finalBuf.append(data)
+
+        
