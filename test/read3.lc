@@ -1,8 +1,11 @@
 {
 #se asignan las variables
 entero x = 20;
-entero y= 100;
-entero z=x+y; #se termina la asignacion
+entero y= 100.2;
+cadena nuevo="cadena"
+cadena nuevo2="cadena nueva"
+cadena nuevo3="cadena nueva3"
+entero z=x+y-; #se termina la asignacion
 #se revisa la condicion
 if(x>200){
     cadena c="El peso es mayor a 200";
@@ -15,3 +18,12 @@ mientras(y==10){
 
 imprimir(x3);
 }
+
+
+
+
+
+
+
+
+

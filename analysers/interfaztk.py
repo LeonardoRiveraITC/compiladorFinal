@@ -3,15 +3,14 @@ from tkinter import ttk, filedialog, messagebox
 from tkinter.scrolledtext import ScrolledText
 import os
 
-sys.path.append('../analysers')
-sys.path.append('../utilities')
 
-from analysers.scan import limpiarWhite
+from scan import limpiarWhite
 from lexDFA import * 
 from symbolTable import *
 from state import *
 import sys
-from utilities.errorStack import errorStack
+sys.path.append('../utilities/')
+from errorStack import *
 from lex import *
 from symbolTable import symbolTableGlobal
 
@@ -20,15 +19,14 @@ stable=symbolTableGlobal({})
 mode=state(False)
 #stack de errores
 errorS=errorStack([])
-errorS.pushErrorStack("hay un problema aqui")
 
 
 #cuando abras un archivo o se de al boton de iniciar analisis
 
 
 #los objetos de tabla de simbolos y el stack de errores ya estan llenados desde el objeto, en este caso son stable y errorS
-#symbolTableGlobal(stable) estos se quitaron pues eran inutiles
-#errorStack(errorS)
+symbolTableGlobal(stable)
+errorStack(errorS)
 
 
 
@@ -40,24 +38,25 @@ class MainWindow(tk.Tk):
         self.geometry("1100x500")
         self.title("115")
 
-        
+
 
         self.editor = ScrolledText(self, wrap=tk.WORD, width=50, height=20, font=("Courier New", 12))
         self.editor.place(x=25, y=25)
 
-        self.tabla = ttk.Treeview(self, columns=("Id", "Token", "Lexema",), show="headings")
+        self.tabla = ttk.Treeview(self, columns=("Id", "Token", "Lexema","Referencia",), show="headings")
         self.tabla.heading("Id", text="Id")
         self.tabla.heading("Token", text="Token")
         self.tabla.heading("Lexema", text="Lexema")
-        
-        self.tabla.place(x=600, y=25, width=600, height=400)
+        self.tabla.heading("Referencia", text="Referencia")
+
+        self.tabla.place(x=600, y=25, width=800, height=400)
 
         #para la tabla de los errores
-        
+
         self.error = ttk.Treeview(self, columns=("Id", "Error"), show="headings")
-        self.error.heading("Id", text="Id")
+        self.error.heading("Id", text="No.")
         self.error.heading("Error", text="Error")
-       
+
         self.error.place(x=30, y=500, width=1200, height=800)
 
         #fin de la tabla de los errores
@@ -91,18 +90,26 @@ class MainWindow(tk.Tk):
         self.mainloop()
 
     def analisis_lexico(self):
+        print(self.path)
+        self.file_save()
+        stable.clean()
+        errorS.cleanErrorStack()
         test = lex(self.file, mode, stable, errorS)
         test.startLexer()
-
+        
         self.tabla.delete(*self.tabla.get_children())  # Limpiar la tabla antes de agregar nuevos datos
-        for index,el in enumerate(stable.getTable()):
-            self.tabla.insert("", "end", values=(index + 1, el[0]))
+        self.error.delete(*self.error.get_children())  # Limpiar la tabla antes de agregar nuevos datos
+        for i in range(1,len(stable.getTable())):
+            self.tabla.insert("", "end", values=(i, stable.getTable()[i]["token"],stable.getTable()[i]["lex"],stable.getTable()[i]["reference"]))
+
+        for i in range(0,len(errorS.getErrorStack())):
+            self.error.insert("","end",values=(i,errorS.getErrorStack()[i]))
 
         messagebox.showinfo("Análisis Léxico", "Se ha completado el análisis léxico y se han mostrado los resultados en la tabla.")
-            
-    
-        
-        
+
+        stable.clean()
+        errorS.cleanErrorStack()
+
         #analisis = analisisl()
         #analisis.ruta = self.path
         #analisis.a()

@@ -86,35 +86,37 @@ class lex:
             bufLine=el["buf"]
             bufNum=el["line"]
             while(bufLine[buf2]!='~'):
-                buf2=buf1
-                state=automata.changeState(automata.getInitial(),bufLine[buf2])
-                lastState=state
-
-                while(state!=9):
-                    lastState=state
-                    buf2+=1
-                    state=automata.changeState(state,bufLine[buf2])
-
-                if(lastState not in automata.F):
-                    errorS.pushErrorStack(error(lastState)(),str(bufNum))
-                    exit()
-                    break
+                if(len(errorS.getErrorStack())>0):
+                   break 
                 else:
-                    t=Token(lastState)()
-                    val=bufLine[buf1:buf2]
-                    if(val in reservadas):
-                        print(val)
-                        stable.addSymbol("reservada",val)
-                    elif (val in operador_logico):
-                        print(val)
-                        stable.addSymbol("op_log",val)
-                    elif (val in operador_aritmetico):
-                        print(val)
-                        stable.addSymbol("op_ar",val)
-                    elif(val == ' '):
-                        pass
+                    buf2=buf1
+                    state=automata.changeState(automata.getInitial(),bufLine[buf2])
+                    lastState=state
+
+                    while(state!=9):
+                        lastState=state
+                        buf2+=1
+                        state=automata.changeState(state,bufLine[buf2])
+
+                    if(lastState not in automata.F):
+                        errorS.pushErrorStack(error(lastState)(),str(bufNum))
+                        break
                     else:
-                        print(val)
-                        stable.addSymbol(t,val)
-                    buf1=buf2
-        stable.printTable()
+                        t=Token(lastState)()
+                        val=bufLine[buf1:buf2]
+                        if(val in reservadas):
+                            print(val)
+                            stable.addSymbol("reservada",val)
+                        elif (val in operador_logico):
+                            print(val)
+                            stable.addSymbol("op_log",val)
+                        elif (val in operador_aritmetico):
+                            print(val)
+                            stable.addSymbol("op_ar",val)
+                        elif(val == ' '):
+                            pass
+                        else:
+                            print(val)
+                            stable.addSymbol(t,val)
+                        buf1=buf2
+            stable.printTable()

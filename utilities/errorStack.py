@@ -5,10 +5,13 @@ class errorStack:
     def getErrorStack(self):
         return self.error
 
+    def cleanErrorStack(self):
+        self.error=[]
+
     def pushErrorStack(self,code,line):
-        print(code)
         message=errorMessageSp(code)()
         self.error.append(str(code)+" en la linea "+str(line)+":  "+str(message))
+        print(self.error)
     
     def popErrorStack(self):
         self.error.pop()

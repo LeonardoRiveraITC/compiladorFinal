@@ -7,6 +7,10 @@ class symbolTableGlobal:
     def getTable(self):
         return self.table
 
+    def clean(self):
+        self.table={}
+        self.id=0
+
     def addSymbol(self,token,lexema):
         idTable=buscar(self.table,lexema)
         self.id+=1
