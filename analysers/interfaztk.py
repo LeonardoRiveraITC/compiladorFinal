@@ -3,14 +3,15 @@ from tkinter import ttk, filedialog, messagebox
 from tkinter.scrolledtext import ScrolledText
 import os
 
+sys.path.append('../analysers')
+sys.path.append('../utilities')
 
-from scan import limpiarWhite
+from analysers.scan import limpiarWhite
 from lexDFA import * 
 from symbolTable import *
 from state import *
 import sys
-sys.path.append('../utilities')
-from errorStack import *
+from utilities.errorStack import errorStack
 from lex import *
 from symbolTable import symbolTableGlobal
 
@@ -19,14 +20,15 @@ stable=symbolTableGlobal({})
 mode=state(False)
 #stack de errores
 errorS=errorStack([])
+errorS.pushErrorStack("hay un problema aqui")
 
 
 #cuando abras un archivo o se de al boton de iniciar analisis
 
 
 #los objetos de tabla de simbolos y el stack de errores ya estan llenados desde el objeto, en este caso son stable y errorS
-symbolTableGlobal(stable)
-errorStack(errorS)
+#symbolTableGlobal(stable) estos se quitaron pues eran inutiles
+#errorStack(errorS)
 
 
 
