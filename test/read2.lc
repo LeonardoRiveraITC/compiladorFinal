@@ -1,11 +1,24 @@
 {
-#comentario
-cadena x = "cadena mal formada"
-entero y = #comentario a media linea 2
-#comentario 
-res = x+y
-#comentario
-si (x<y){
-flotante z=22.22
+#Se detiene el análisis
+entero x = 20;
+entero y= 100.2;
+cadena nuevo="cadena"
+cadena nuevo2="cadena nueva"
+cadena nuevo3="cadena nueva3"
+entero z=x+y-; #se termina la asignacion
+#se revisa la condicion
+if(x>200){
+    cadena c="El peso es mayor a 200";
 }
+
+#El stack de errores recibira un error debido al caracter no valido y se detendra el analisis
+[
+
+mientras(y==10){
+    imprimir("reparticion incompleta");
+    x=z/2;
 }
+
+imprimir(x3);
+}
+

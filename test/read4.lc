@@ -1,9 +1,9 @@
 {
 #se asignan las variables
 entero x = 20;
-entero y= 100.2;
-#el stack recibira un error de cadena y detendra el analisis
-cadena nuevo="cadena
+#el stack recibira un error de flotante y detendra el analisis
+entero y= 100.;
+cadena nuevo="cadena"
 cadena nuevo2="cadena nueva"
 cadena nuevo3="cadena nueva3"
 entero z=x+y-; #se termina la asignacion
@@ -19,4 +19,3 @@ mientras(y==10){
 
 imprimir(x3);
 }
-
