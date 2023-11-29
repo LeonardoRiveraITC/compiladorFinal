@@ -4,5 +4,6 @@ pkgs.mkShell {
   packages =[
         pkgs.python310
         pkgs.python310Packages.tkinter
+        pkgs.python310Packages.lark 
   ];
 }
