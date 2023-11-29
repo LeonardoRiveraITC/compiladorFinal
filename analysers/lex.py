@@ -10,9 +10,10 @@ from errorStack import *
 #alfabeto
 alfabeto={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"}
 digito={"0","1","2","3","4","5","6","7","8","9"}
-operador={'==','=',"+","-","/","*","<",">"}
+operador={'==',"!=",'=',"+","-","/","*","<",">",">=","<="}
+operador_as={"="}
 operador_logico={'==',"!="}
-operador_aritmetico={"+","-","/","*","<",">"}
+operador_aritmetico={"+","-","/","*","<",">","<=",">="}
 delimitador={"{","}","(",")",";"}
 reservadas={"si","else","mientras","entero","cadena","flotante","imprimir","teclado"}
 
@@ -22,7 +23,7 @@ def Token(estado):
              2: lambda: "num",
              4: lambda: "float",
              5: lambda: "op",
-             7: lambda: "cadena",
+             7: lambda: "cad",
              8: lambda: "delim" 
             }.get(estado, lambda: None)
 
@@ -105,14 +106,16 @@ class lex:
                         t=Token(lastState)()
                         val=bufLine[buf1:buf2]
                         if(val in reservadas):
-                            print(val)
-                            stable.addSymbol("reservada",val)
+                            stable.addSymbol(val,val)
                         elif (val in operador_logico):
-                            print(val)
-                            stable.addSymbol("op_log",val)
+                            stable.addSymbol(val,val)
                         elif (val in operador_aritmetico):
                             print(val)
-                            stable.addSymbol("op_ar",val)
+                            stable.addSymbol(val,val)
+                        elif(val in delimitador):
+                            stable.addSymbol(val,val)
+                        elif(val in operador_as):
+                            stable.addSymbol(val,val)
                         elif(val == ' '):
                             pass
                         else:

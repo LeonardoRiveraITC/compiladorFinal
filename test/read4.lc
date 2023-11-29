@@ -2,10 +2,10 @@
 #se asignan las variables
 entero x = 20;
 #el stack recibira un error de flotante y detendra el analisis
-entero y= 100.;
-cadena nuevo="cadena"
-cadena nuevo2="cadena nueva"
-cadena nuevo3="cadena nueva3"
+entero y= 100.0;
+cadena nuevo="cadena";
+cadena nuevo2="cadena nueva";
+cadena nuevo3="cadena nueva3";
 entero z=x+y-; #se termina la asignacion
 #se revisa la condicion
 if(x>200){
@@ -13,7 +13,6 @@ if(x>200){
 }
 
 mientras(y==10){
-    imprimir("reparticion incompleta");
     x=z/2;
 }
 

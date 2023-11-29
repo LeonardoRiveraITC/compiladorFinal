@@ -3,20 +3,17 @@
 entero x = 20;
 entero y= 100.2;
 #el stack recibira un error de cadena y detendra el analisis
-cadena nuevo="cadena
-cadena nuevo2="cadena nueva"
-cadena nuevo3="cadena nueva3"
-entero z=x+y-; #se termina la asignacion
+cadena nuevo="cadena";
+cadena nuevo2="cadena nueva";
+cadena nuevo3="cadena nueva3";
+entero z=x+y; #se termina la asignacion
 #se revisa la condicion
-if(x>200){
+si(x>200){
     cadena c="El peso es mayor a 200";
 }
 
 mientras(y==10){
-    imprimir("reparticion incompleta");
     x=z/2;
 }
-
-imprimir(x3);
 }
 
