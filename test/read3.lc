@@ -1,6 +1,6 @@
 {
 #se asignan las variables
-entero x = 20;
+entero x = 20+20*100;
 entero y= 100.2;
 #el stack recibira un error de cadena y detendra el analisis
 cadena nuevo="cadena";

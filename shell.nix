@@ -5,5 +5,6 @@ pkgs.mkShell {
         pkgs.python310
         pkgs.python310Packages.tkinter
         pkgs.python310Packages.lark 
+        pkgs.python310Packages.pydot
   ];
 }

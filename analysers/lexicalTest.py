@@ -60,4 +60,4 @@ myParse=parc(grammar,stable,mode)
 
 myParse.start()
 
-print(errorS.getErrorStack())
+#print(errorS.getErrorStack())

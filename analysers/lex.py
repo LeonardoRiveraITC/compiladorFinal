@@ -110,7 +110,6 @@ class lex:
                         elif (val in operador_logico):
                             stable.addSymbol(val,val)
                         elif (val in operador_aritmetico):
-                            print(val)
                             stable.addSymbol(val,val)
                         elif(val in delimitador):
                             stable.addSymbol(val,val)
@@ -119,7 +118,6 @@ class lex:
                         elif(val == ' '):
                             pass
                         else:
-                            print(val)
                             stable.addSymbol(t,val)
                         buf1=buf2
-            stable.printTable()
+ #           stable.printTable()
