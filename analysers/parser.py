@@ -29,19 +29,18 @@ class CalculateTree(Transformer):
 calc_grammar = """
     ?start: block 
 
-    ?block: [ (decl ";")* | decision* | iteracion* ] 
+    ?block: "{" ([decision] [iteracion] [decl])* "}"  
 
-    ?decision: "si" "(" exprlog ")" "{" block "}"
+    ?decision: "si" "(" exprlog ")" block 
 
-    ?iteracion: "mientras" "(" exprlog ")" "{" block "}"
+    ?iteracion: "mientras" "(" exprlog ")" block 
 
     ?exprlog: fact 
             | fact oplog fact
 
-    ?fact: number | cadena | id
+    ?fact: (number | cadena | id)
 
-    ?decl: tipodato id ["=" number|cadena|id|sum]
-        | id "=" number|cadena|id|sum 
+    ?decl: [tipodato] id ["=" (cadena|id|sum)] ";"
 
     ?sum: product
         | sum "+" product   
@@ -52,12 +51,10 @@ calc_grammar = """
         | product "/" atom  
 
     ?atom: number          
-         | "-" atom         -> neg
-         | "(" sum ")"
 
-    number: "float"|"num"
+    number: ("float"|"num")
     cadena: "cad"
-    tipodato: "cadena"| "flotante" | "entero"
+    tipodato: ("cadena"| "flotante" | "entero")
     id:"id"
 
     oplog: ">"  
