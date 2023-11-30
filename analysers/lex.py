@@ -15,7 +15,8 @@ operador_as={"="}
 operador_logico={'==',"!="}
 operador_aritmetico={"+","-","/","*","<",">","<=",">="}
 delimitador={"{","}","(",")",";"}
-reservadas={"si","else","mientras","entero","cadena","flotante","imprimir","teclado"}
+reservadas={"si","else","mientras","imprimir","teclado"}
+tipo_dato={"entero","cadena","flotante"}
 
 def Token(estado):
     return {
@@ -25,6 +26,34 @@ def Token(estado):
              5: lambda: "op",
              7: lambda: "cad",
              8: lambda: "delim" 
+            }.get(estado, lambda: None)
+
+def delim(estado):
+    return {
+             "{": lambda: "LBRACE",
+             "}": lambda: "RBRACE",
+             "(": lambda: "LPAR",
+             ")": lambda: "RPAR",
+             ";": lambda: "SEMICOLON",
+            }.get(estado, lambda: None)
+
+def op(estado):
+    return {
+            ';' : lambda: 'SEMICOLON',
+            '+' : lambda:'PLUS',
+            '-' : lambda:'MINUS',
+            '*' : lambda:'STAR',
+            '/' : lambda:'SLASH',
+            '<' : lambda:'LESSTHAN',
+            '>' : lambda:'MORETHAN',
+            '=' : lambda:'EQUAL',
+            '(' : lambda:'LPAR',
+            ')' : lambda:'RPAR',
+            '{' : lambda:'LBRACE',
+            '}' : lambda:'RBRACE',
+            '==' : lambda:'EQEQ',
+            '>=' : lambda:'>=',
+            '<=' : lambda:'<=',
             }.get(estado, lambda: None)
 
 def error(estado):
@@ -105,19 +134,21 @@ class lex:
                     else:
                         t=Token(lastState)()
                         val=bufLine[buf1:buf2]
-                        if(val in reservadas):
-                            stable.addSymbol(val,val,str(bufNum))
+                        if(val in tipo_dato):
+                            stable.addSymbol("TIPODATO",val,str(bufNum))
+                        elif(val in reservadas):
+                            stable.addSymbol(val.upper(),val,str(bufNum))
                         elif (val in operador_logico):
-                            stable.addSymbol(val,val,str(bufNum))
+                            stable.addSymbol(op(val)(),val,str(bufNum))
                         elif (val in operador_aritmetico):
-                            stable.addSymbol(val,val,str(bufNum))
+                            stable.addSymbol(op(val)(),val,str(bufNum))
                         elif(val in delimitador):
+                            val=delim(val)()
                             stable.addSymbol(val,val,str(bufNum))
                         elif(val in operador_as):
-                            stable.addSymbol(val,val,str(bufNum))
+                            stable.addSymbol(op(val)(),val,str(bufNum))
                         elif(val == ' '):
                             pass
                         else:
-                            stable.addSymbol(t,val,str(bufNum))
+                            stable.addSymbol(t.upper(),(val),str(bufNum))
                         buf1=buf2
-            stable.printTable()

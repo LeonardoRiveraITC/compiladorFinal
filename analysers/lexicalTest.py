@@ -21,9 +21,9 @@ grammar = """
     ?exprlog: fact 
             | fact oplog fact
 
-    ?fact: (number | cadena | id)
+    ?fact: (number | CAD | ID)
 
-    ?decl: [tipodato] id ["=" (cadena|id|[sum]*)] ";"
+    ?decl: [TIPODATO] ID ["=" (CAD|ID|[sum]*)] ";"
 
     ?sum: product
         | sum "+" product   
@@ -33,19 +33,24 @@ grammar = """
         | product "*" atom  
         | product "/" atom  
 
-    ?atom: number | id         
+    ?atom: number | ID         
 
-    number: ("float"|"num")
-    cadena: "cad"
-    tipodato: ("cadena"| "flotante" | "entero")
-    id:"id"
+    number: (FLOAT|NUM)
+    FLOAT: /(.*)/
+    NUM: /(.*)/
+ 
+    CAD: /(.*)/
+    TIPODATO: /(.*)/
+    ID:/(.*)/
 
-    oplog: ">"  
+    ?oplog: ">"  
+        | EQEQ
         | "<"  
         | ">="
         | "<="  
-        | "==" 
-
+    
+    EQEQ: "=="
+    
 """
 stable=symbolTableGlobal({})
 #modo

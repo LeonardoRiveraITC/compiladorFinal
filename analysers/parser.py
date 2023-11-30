@@ -11,33 +11,47 @@ class parc:
 
 
     def start(self):
-        calc_parser = Lark(self.grammar, parser='lalr')
-        data=''
-        for i in range(1,len(self.stable.getTable())+1):
-            refIdx=self.stable.getTable()[i]["reference"]
-            if(refIdx != ''):
-                tok=(Token (self.stable.getTable()[refIdx]["lex"],self.stable.getTable()[refIdx]["token"],line=self.stable.getTable()[i]["line"]))
-                data+=tok
-
-            else:
-                tok=(Token (self.stable.getTable()[i]["lex"],self.stable.getTable()[i]["token"],line=self.stable.getTable()[i]["line"]))
-                data+=tok
-        print(data)
-        ast=calc_parser.parse(str(data))
-        print(ast.pretty())
+        calc_parser = Lark(self.grammar, parser='lalr',lexer=TypeLexer,propagate_positions=True)
+        #calc_parser=calc_parser.parse_interactive()
+        calc_parser.parse
+                #calc_parser.feed_token(tok)
+        ast=calc_parser.parse(self.stable)
+        #print(ast.pretty())
         
         transf=CalculateTree()
-        transf.visit(ast)
+        transf=transf.transform(ast)
         make_png('./arbol.png',ast)
 
 
 @v_args(inline=True)    # Affects the signatures of the methods
-class CalculateTree(Visitor):
+class CalculateTree(Transformer):
     from operator import add, sub, mul, truediv as div, neg
-    atom=float
+    
+    def __init__(self):
+        self.vars = {}
 
-    def decl(tipo,id):
-        print(id)
+    @v_args(meta=True)    # Affects the signatures of the methods
+    def decl(self, a1,a2):
+        if(a2[0] is not None):
+            print (a2[1])
+            self.vars[a2[1].value]=a2[0].value
+            print(self.vars)
         
 def make_png(filename,parser):
     tree.pydot__tree_to_png( parser, filename)
+
+class TypeLexer(Lexer):
+    def __init__(self, lexer_conf):
+        pass
+
+    def lex(self, data):
+        for i in range(1,len(data.getTable())+1):
+            refIdx=data.getTable()[i]["reference"]
+            if(refIdx != ''):
+                tok=(Token (data.getTable()[refIdx]["token"],value=data.getTable()[refIdx]["lex"],line=i))
+                yield tok
+                #calc_parser.feed_token(tok)
+
+            else:
+                tok= (Token (data.getTable()[i]["token"],data.getTable()[i]["lex"],line=i))
+                yield tok
