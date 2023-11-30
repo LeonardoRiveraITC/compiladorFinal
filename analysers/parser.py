@@ -58,24 +58,21 @@ class CalculateTree(Transformer):
     @v_args(meta=True)
     def exprlog(self,a1,a2):
         numb=["number","NUM","FLOAT","product","sum","atom","entero","float"]
+        cad=["cadena","CAD"]
         if(a2[0].type == "ID"):
             if(a2[0].value not in self.vars):
                 self.estack.pushErrorStack(304,a2[0].line)
             elif(a2[0] in self.vars):
-                if(self.vars[a2[0]] in numb):
-                    if(a2[2].type not in numb):
-                        if(a2[2].type != "NUM"):
-                            self.estack.pushErrorStack(305,a2[0].line)
-                elif(not isinstance(a2[2],str)):
-                        self.estack.pushErrorStack(306,a2[1].line)
-
-        elif(a2[0].type in numb):
-            if(a2[2].type not in numb):
-                if(a2[2].type != "NUM"):
+                if(self.vars[a2[0]] not in numb):
                     self.estack.pushErrorStack(305,a2[0].line)
-        elif(not isinstance(a2[2],str)):
-                self.estack.pushErrorStack(306,a2[1].line)
-        
+            elif(a2[2] in self.vars):
+                if(self.vars[a2[2]] not in numb):
+                    self.estack.pushErrorStack(305,a2[2].line)
+        elif(a2[0].type not in numb):
+            self.estack.pushErrorStack(305,a2[0].line)
+        elif(a2[2].type not in numb):
+            self.estack.pushErrorStack(305,a2[0].line)
+
 def make_png(filename,parser):
     tree.pydot__tree_to_png( parser, filename)
 
