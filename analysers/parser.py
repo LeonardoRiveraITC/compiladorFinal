@@ -16,15 +16,19 @@ class parc:
         for i in range(1,len(self.stable.getTable())+1):
             refIdx=self.stable.getTable()[i]["reference"]
             if(refIdx != ''):
-                data+=(Token (self.stable.getTable()[refIdx]["lex"],self.stable.getTable()[refIdx]["token"]))
+                tok=(Token (self.stable.getTable()[refIdx]["lex"],self.stable.getTable()[refIdx]["token"],line=self.stable.getTable()[i]["line"]))
+                data+=tok
+
             else:
-                data+=(Token (self.stable.getTable()[i]["lex"],self.stable.getTable()[i]["token"]))
+                tok=(Token (self.stable.getTable()[i]["lex"],self.stable.getTable()[i]["token"],line=self.stable.getTable()[i]["line"]))
+                data+=tok
+        print(data)
         ast=calc_parser.parse(str(data))
-        #print(ast.pretty())
+        print(ast.pretty())
         
         transf=CalculateTree()
         transf.visit(ast)
-        #make_png('./arbol.png',ast)
+        make_png('./arbol.png',ast)
 
 
 @v_args(inline=True)    # Affects the signatures of the methods
@@ -32,8 +36,8 @@ class CalculateTree(Visitor):
     from operator import add, sub, mul, truediv as div, neg
     atom=float
 
-    def product(tok,t2):
-        print(t2.pretty)
+    def decl(tipo,id):
+        print(id)
         
 def make_png(filename,parser):
     tree.pydot__tree_to_png( parser, filename)
