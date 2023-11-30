@@ -21,7 +21,7 @@ grammar = """
     ?exprlog: fact 
             | fact oplog fact
 
-    ?fact: (number | CAD | ID)
+    ?fact: (FLOAT | NUM | CAD | ID )
 
     ?decl: [TIPODATO] ID ["=" (CAD|ID|[sum]*)] ";"
 
@@ -61,7 +61,7 @@ errorS=errorStack([])
 test=lex('../test/read3.lc',mode,stable,errorS)
 test.startLexer()
 
-myParse=parc(grammar,stable,mode)
+myParse=parc(grammar,stable,mode,errorS)
 
 myParse.start()
 
