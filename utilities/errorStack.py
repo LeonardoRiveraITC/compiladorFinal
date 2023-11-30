@@ -12,7 +12,6 @@ class errorStack:
         message=errorMessageSp(code)()
         self.error.append(str(code)+" en la linea "+str(line)+":  "+str(message))
         print(self.error)
-        return 0
     
     def popErrorStack(self):
         self.error.pop()

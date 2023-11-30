@@ -15,18 +15,21 @@ class parc:
         try:
             calc_parser = Lark(self.grammar, parser='lalr',lexer=TypeLexer,propagate_positions=True)
             #calc_parser=calc_parser.parse_interactive()
+            ast=calc_parser.parse(self.stable)
             calc_parser.parse
                     #calc_parser.feed_token(tok)
-            ast=calc_parser.parse(self.stable)
             #print(ast.pretty())
             
-            transf=CalculateTree(self.estack)
-            transf=transf.transform(ast)
             make_png('./arbol.png',ast)
         except exceptions.UnexpectedToken as e:
             print(e)
             self.estack.pushErrorStack(200,e)
 
+    def sem(self):
+            calc_parser = Lark(self.grammar, parser='lalr',lexer=TypeLexer,propagate_positions=True)
+            ast=calc_parser.parse(self.stable)
+            transf=CalculateTree(self.estack)
+            transf=transf.transform(ast)
 
 
 @v_args(inline=True)    # Affects the signatures of the methods

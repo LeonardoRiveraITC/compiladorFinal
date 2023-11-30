@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from tkinter.scrolledtext import ScrolledText
+from tkinter import *
+from parser import *
+import time as time
 import os
 
 
@@ -20,15 +23,64 @@ mode=state(False)
 #stack de errores
 errorS=errorStack([])
 
+grammar = """
+    ?start: block 
 
-#cuando abras un archivo o se de al boton de iniciar analisis
+    ?block: "{" ([decision] [iteracion] [decl])* "}"  
+
+    ?decision: "si" "(" exprlog ")" block 
+
+    ?iteracion: "mientras" "(" exprlog ")" block 
+
+    ?exprlog: fact 
+            | fact oplog fact
+
+    ?fact: (FLOAT | NUM | CAD | ID )
+
+    ?decl: [TIPODATO] ID ["=" (CAD|ID|[sum]*)] ";"
+
+    ?sum: product
+        | sum "+" product   
+        | sum "-" product  
+
+    ?product: atom
+        | product "*" atom  
+        | product "/" atom  
+
+    ?atom: number | ID         
+
+    number: (FLOAT|NUM)
+    FLOAT: /(.*)/
+    NUM: /(.*)/
+ 
+    CAD: /(.*)/
+    TIPODATO: /(.*)/
+    ID:/(.*)/
+
+    ?oplog: ">"  
+        | EQEQ
+        | "<"  
+        | ">="
+        | "<="  
+    
+    EQEQ: "=="
+    
+"""
 
 
-#los objetos de tabla de simbolos y el stack de errores ya estan llenados desde el objeto, en este caso son stable y errorS
-symbolTableGlobal(stable)
-errorStack(errorS)
 
+myParse=parc(grammar,stable,mode,errorS)
 
+class Photo:   
+    def __init__(self, image):
+        self.image = image
+        self.root = tk.Tk()
+        self.widgets()
+        self.root.mainloop()
+    def widgets(self):
+        self.img = PhotoImage(file=self.image)
+        label = tk.Label(self.root, image=self.img)
+        label.pack()
 
 
 class MainWindow(tk.Tk):
@@ -37,6 +89,7 @@ class MainWindow(tk.Tk):
         super().__init__(*args, **kwargs)
         self.geometry("1100x500")
         self.title("115")
+        self.photo = tk.PhotoImage("./arbol.png")
 
 
 
@@ -107,8 +160,6 @@ class MainWindow(tk.Tk):
 
         messagebox.showinfo("Análisis Léxico", "Se ha completado el análisis léxico y se han mostrado los resultados en la tabla.")
 
-        stable.clean()
-        errorS.cleanErrorStack()
 
         #analisis = analisisl()
         #analisis.ruta = self.path
@@ -119,11 +170,17 @@ class MainWindow(tk.Tk):
 
     def analisis_sintactico(self):
         # Implementación del análisis sintáctico
-        messagebox.showinfo("Análisis Sintáctico", "Aquí va la implementación del análisis sintáctico")
+        myParse.start()
+        messagebox.showinfo("Análisis Sintáctico")
+        for i in range(0,len(errorS.getErrorStack())):
+            self.error.insert("","end",values=(i,errorS.getErrorStack()[i]))
 
     def analisis_semantico(self):
         # Implementación del análisis semántico
+        myParse.sem()
         messagebox.showinfo("Análisis Semántico", "Aquí va la implementación del análisis semántico")
+        for i in range(0,len(errorS.getErrorStack())):
+            self.error.insert("","end",values=(i,errorS.getErrorStack()[i]))
 
     def dialog_critical(self, s):
         messagebox.showerror("Error", s)

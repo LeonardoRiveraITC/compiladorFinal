@@ -2,10 +2,11 @@
 #se asignan las variables
 entero x = 20+20*100;
 entero y= 100.2;
-#el stack recibira un error de cadena y detendra el analisis
+#el stack recibira un error de cadena 
 cadena nuevo="cadena";
 cadena nuevo2="cadena nueva";
 cadena nuevo3="cadena nueva3";
+#nuevo3=50
 entero z=x+y; #se termina la asignacion
 #se revisa la condicion
 si(x>222){
@@ -15,9 +16,20 @@ y=10+10;
 mientras(y>10){
     x=z/2;
 }
-mientras(1<"asd"){
+mientras(1<2){
     x=z/2;
 }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
